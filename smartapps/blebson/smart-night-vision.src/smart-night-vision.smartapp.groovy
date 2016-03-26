@@ -15,7 +15,7 @@
  */
 
 definition(
-    name: "D-Link Smart Night Vision",
+    name: "Smart Night Vision",
     namespace: "blebson",
     author: "Ben Lebson",
     description: "Ties camera night-vision to a switch or dimmer for more exact control.",
