@@ -1,6 +1,6 @@
 /**
  *  Smart Night Vision
- *  Version 1.0.0
+ *  Version 1.1.0
  *  Copyright 2016 BLebson
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -25,8 +25,8 @@ definition(
 
 preferences {
 	section("Choose one or more, when..."){		
-		input "mySwitch", "capability.switchLevel", title: "Switch Turned On", required: false, multiple: true
-		input "dimmingLevel", "number", title: "Minimum Dimming Level, from 0-100", range: "000..100", required: true, multiple: true		
+		input "mySwitch", "capability.switch", title: "Switch Turned On", required: false, multiple: true
+		input "dimmingLevel", "number", title: "Minimum Dimming Level, from 0-100 (only for dimmers)", range: "000..100", required: false		
 	}
 	section("Choose camera to use") {
 		input "camera", "capability.imageCapture", description: "NOTE: Currently only compatable with D-Link Devices made by BLebson"		
@@ -55,10 +55,18 @@ def dimStateChanged(evt) {
 	
 	if (evt.value == "on")
 	{
+    	if(dimmingLevel == null)
+        {
+        	camera.nvOff()
+        }
 		return
 	}
 	else if (evt.value == "off" )
 	{
+    	if(dimmingLevel == null)
+        {
+        	camera.nvOn()
+        }
 		return
 	}
 	else{
