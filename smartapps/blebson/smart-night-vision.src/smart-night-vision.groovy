@@ -1,6 +1,6 @@
 /**
  *  Smart Night Vision
- *  Version 1.1.1
+ *  Version 1.1.2
  *  Copyright 2016 BLebson
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -59,7 +59,19 @@ def dimStateChanged(evt) {
         {
         	camera.nvOff()
         }
-		return
+        else {
+        log.debug("Dimming Event. ${evt.value}")
+		def level = evt.value                
+		level = level.toInteger()
+		if (level >= dimmingLevel)
+		{
+			camera.nvOff()
+		}
+		else if (level < dimmingLevel)
+		{
+			camera.nvOn()
+		}
+    	}
 	}
 	else if (evt.value == "off" )
 	{
@@ -67,7 +79,19 @@ def dimStateChanged(evt) {
         {
         	camera.nvOn()
         }
-		return
+        else {
+        log.debug("Dimming Event. ${evt.value}")
+		def level = evt.value                
+		level = level.toInteger()
+		if (level >= dimmingLevel)
+		{
+			camera.nvOff()
+		}
+		else if (level < dimmingLevel)
+		{
+			camera.nvOn()
+		}
+        }
 	}
 	else{
     	log.debug("Dimming Event. ${evt.value}")
